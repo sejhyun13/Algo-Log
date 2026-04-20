@@ -3,10 +3,9 @@ if os.path.exists(_f := __file__.replace('.py', '_input.txt')): sys.stdin = open
 
 from heapq import heappush, heappop
 
-
-def djik(start, target):
+def djik(graph, start):
     pq = [(0, start)]
-    dist = [INF] * (N + 1)
+    dist = [INF] * (N+1)
     dist[start] = 0
 
     while pq:
@@ -25,21 +24,22 @@ def djik(start, target):
             dist[nxt] = new_c
             heappush(pq, (new_c, nxt))
 
-    return dist[target]
-
+    return dist
 
 T = int(input())
-for tc in range(1, T + 1):
+for tc in range(1,T+1):
     N, M, X = map(int, input().split())
-    graph = [[] for _ in range(N + 1)]
+    graph = [[] for _ in range(N+1)]
+    reverse = [[] for _ in range(N+1)]
     INF = float('inf')
     for _ in range(M):
         x, y, c = map(int, input().split())
         graph[x].append((c, y))
+        reverse[y].append((c, x))
     ans = 0
-    for i in range(1, N + 1):
-        temp = djik(i, X) + djik(X, i)
-        if temp > ans:
-            ans = temp
+    forward = djik(graph, X)
+    backward = djik(reverse, X)
+    for i in range(1,N+1):
+        ans = max(ans, forward[i]+backward[i])
 
     print(f'#{tc} {ans}')

@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, time
 if os.path.exists(_f := __file__.replace('.py', '_input.txt')): sys.stdin = open(_f)
 
 from heapq import heappush,heappop
@@ -16,7 +16,7 @@ def dijk():
         for d in range(4):
             nx, ny = x + dx[d], y + dy[d]
 
-            if 0 <= nx < n and 0 <= ny < n and dist[nx][ny] == float('inf'):
+            if 0 <= nx < n and 0 <= ny < n:
                 new_w = w + arr[nx][ny]
 
                 if dist[nx][ny] <= new_w:
