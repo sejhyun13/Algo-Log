@@ -1,10 +1,8 @@
 import sys, os
 if os.path.exists(_f := __file__.replace('.py', '_input.txt')): sys.stdin = open(_f)
 
-
-
 dy, dx = [-1, 1, 0, 0], [0, 0, -1, 1]  # 상하좌우
-
+opposite = [1, 0, 3, 2]  # 반대 방향
 
 def in_range(x, y):
     return 0 <= x < 2001 and 0 <= y < 2001
@@ -13,11 +11,13 @@ def sol():
     global energy
     for _ in range(4001):
         dest = {}
+        pos = {(atoms[i][0], atoms[i][1]): i for i in range(n) if atoms[i]}
 
         for i in range(n):
             if not atoms[i]:
                 continue
             x, y, d, k = atoms[i]
+
             nx, ny = x + dx[d], y + dy[d]
             if in_range(nx, ny):
                 dest.setdefault((nx,ny),[]).append(i)  # 이동한 원자 임시 딕셔너리에 입력
@@ -49,4 +49,3 @@ for tc in range(1, T+1):
 
     sol()
     print(f'#{tc} {energy}')
-
