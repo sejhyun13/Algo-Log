@@ -14,7 +14,7 @@ def choose(cnt, prev):
         targets.append(coords[i])
         choose(cnt+1, i)
         targets.pop()
-d
+
 def fire(x, y):
     global kills
     if grid[x][y] < k:
