@@ -3,10 +3,10 @@ if os.path.exists(_f := __file__.replace('.py', '_input.txt')): sys.stdin = open
 from heapq import heappop, heappush
 
 
-def djik(start, end):
+def dijk(graph, start):
     pq = [(0, start)]
     vis = [float('inf')] * (n+1)
-    # vis[start] = 0
+    vis[start] = 0
 
     while pq:
         weight, node = heappop(pq)
@@ -19,22 +19,25 @@ def djik(start, end):
                     vis[nxt_node] = new_w
                     heappush(pq, (new_w, nxt_node))
 
-    return vis[end]
+    return vis
 
 T = int(input())
 for tc in range(1,T+1):
     n, m, X = map(int, input().split())
     graph = [[] for _ in range(n+1)]
+    rev = [[] for _ in range(n+1)]
     for _ in range(m):
         x, y, c = map(int, input().split())
         graph[x].append((c, y))
+        rev[y].append((c, x))
     
+    go = dijk(rev, X)
+    back = dijk(graph, X)
     ans = 0
     for i in range(1,n+1):
         if i == X:
             continue
-        temp = djik(i, X) + djik(X, i)
+        temp = go[i] + back[i]
         if temp > ans:
             ans = temp
-
     print(f'#{tc} {ans}')
