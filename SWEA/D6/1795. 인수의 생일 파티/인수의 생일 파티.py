@@ -1,3 +1,7 @@
+import sys, os
+if os.path.exists(_f := __file__.replace('.py', '_input.txt')): sys.stdin = open(_f)
+#####################################################################################
+
 from heapq import heappop, heappush
 
 
